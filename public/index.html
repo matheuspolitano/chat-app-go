@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Politano</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="flex flex-col items-center justify-center min-h-screen">
+        <!-- Profile Card -->
+        <div class="max-w-md w-full bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mb-6">
+            <div class="md:flex">
+                <div class="md:flex-shrink-0">
+                    <img class="h-48 w-full object-cover md:h-full md:w-48" src="https://github.com/matheuspolitano.png" alt="Matheus Politano">
+                </div>
+                <div class="p-8">
+                    <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Matheus Politano</div>
+                    <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">About Matheus Politano</a>
+                    <p class="mt-2 text-gray-500">Short description or biography of Matheus Politano...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="max-w-md w-full bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+            <div class="p-6">
+                <div class="mb-4 font-semibold text-lg">Chat</div>
+                <div id="chatMessages" class="h-64 overflow-y-auto mb-4 p-3 bg-gray-50 rounded">
+                    <!-- Chat messages -->
+                    <div class="flex items-start mb-4 text-sm">
+                        <div class="flex-shrink-0 font-bold mr-2 rounded bg-blue-100 flex items-center justify-center w-8 h-8">B:</div>
+
+                        <div class="flex-1 p-2 rounded bg-blue-100">Hello, how are yceou?</div>
+                    </div>
+
+                    <!-- Add more messages here -->
+                </div>
+                <form id="chatForm" class="flex">
+                    <input type="text" id="message-user" class="flex-grow p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Type a message...">
+                    <button type="submit" class="bg-indigo-500 text-white px-4 rounded-r hover:bg-indigo-600">Send</button>
+                </form>
+            </div>
+        </div>
+        <script src="/static/js/index.js" type="module"></script>
+    </div>
+</body>
+</html>
