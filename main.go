@@ -3,6 +3,8 @@ package main
 import (
 	"net/http"
 	"time"
+
+	"github.com/matheuspolitano/chat-app-go/pkg/handlers"
 )
 
 func main() {
@@ -10,10 +12,8 @@ func main() {
 	fileServer := http.FileServer(staticDir)
 
 	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
-
-	// Serve index.html for root URL
 	http.Handle("/", fileServer)
-
+	http.HandleFunc("/ws", handlers.ServeWs)
 	server := &http.Server{
 		Addr:              ":8089",
 		ReadHeaderTimeout: 3 * time.Second,

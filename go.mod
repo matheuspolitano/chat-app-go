@@ -1,4 +1,4 @@
-module github.com/matheuspolitano/chat-go-app
+module github.com/matheuspolitano/chat-app-go
 
 go 1.21.1
 
