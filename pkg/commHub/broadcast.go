@@ -1,18 +1,8 @@
-package websocket
-
-import "github.com/gorilla/websocket"
-
-type message chan<- string
-
-type Client struct {
-	send     message
-	conn     *websocket.Conn
-	username string
-}
+package commHub
 
 type Hub struct {
 	clients  map[*Client]bool
-	message  chan string
+	message  chan []byte
 	incoming chan *Client
 	leaving  chan *Client
 }
@@ -20,7 +10,7 @@ type Hub struct {
 func NewHub() *Hub {
 	return &Hub{
 		clients:  make(map[*Client]bool),
-		message:  make(chan string),
+		message:  make(chan []byte),
 		incoming: make(chan *Client),
 		leaving:  make(chan *Client),
 	}
@@ -29,15 +19,14 @@ func NewHub() *Hub {
 func (hub *Hub) Run() {
 	for {
 		select {
+		case in := <-hub.incoming:
+			hub.clients[in] = true
 		case m := <-hub.message:
 			for client := range hub.clients {
 				select {
 				case client.send <- m:
 				}
 			}
-
-		case in := <-hub.incoming:
-			hub.clients[in] = true
 
 		case l := <-hub.leaving:
 			if _, ok := hub.clients[l]; ok {
