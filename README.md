@@ -1,24 +1,4 @@
-MIT License
-
-Copyright (c) 2024 Matheus Politano
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.# Go Chat Application
+# Go Chat Application
 
 This Go chat application provides real-time communication between users through websockets. It's built using the Go programming language and leverages the `gorilla/websocket` package for managing websocket connections. The application is designed to be simple, efficient, and easy to deploy and run.
 
@@ -43,7 +23,7 @@ To get the chat application running locally, follow these steps:
    First, clone this repository to your local machine using Git.
 
    ```bash
-   git clone https://github.com/matheuspolitano/chat-app-go.git
+   git clone https://github.com/yourusername/your-repo-name.git
    cd your-repo-name
    ```
 
