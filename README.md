@@ -23,7 +23,7 @@ To get the chat application running locally, follow these steps:
    First, clone this repository to your local machine using Git.
 
    ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
+   git clone https://github.com/matheuspolitano/chat-app-go.git
    cd your-repo-name
    ```
 
