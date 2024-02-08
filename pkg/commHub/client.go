@@ -1,10 +1,12 @@
 package commHub
 
 import (
+	"encoding/json"
 	"log"
 	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/matheuspolitano/chat-app-go/pkg/model"
 )
 
 const (
@@ -21,21 +23,24 @@ const (
 	maxMessageSize = 512
 )
 
-type message chan []byte
+type MessageClient struct {
+	client   *Client
+	messagem []byte
+}
 
 type Client struct {
-	send     chan []byte
+	send     chan MessageClient
 	conn     *websocket.Conn
 	username string
 	hub      *Hub
 }
 
-func NewClient(hub *Hub, conn *websocket.Conn) *Client {
+func NewClient(hub *Hub, conn *websocket.Conn, username string) *Client {
 	client := &Client{
-		send:     make(chan []byte, 256),
+		send:     make(chan MessageClient),
 		conn:     conn,
 		hub:      hub,
-		username: "MatheusPolitano",
+		username: username,
 	}
 	hub.incoming <- client
 	return client
@@ -51,8 +56,8 @@ func (c *Client) ReadPump() {
 			log.Println("ReadPump error:", err)
 			break
 		}
-		log.Println("ReadPump received:", string(message))
-		c.hub.message <- message
+		log.Printf("ReadPump %s received:%s", c.username, string(message))
+		c.hub.message <- MessageClient{c, message}
 	}
 }
 
@@ -60,29 +65,29 @@ func (c *Client) WritePump() {
 	defer func() {
 		c.conn.Close()
 	}()
-	ticker := time.NewTicker(10 * time.Second)
-	defer ticker.Stop()
 
 	for {
 		select {
 		case message, ok := <-c.send:
 			if !ok {
-				log.Println("WritePump: send channel closed")
+				log.Printf("%s send channel closed", c.username)
 				return
 			}
-			err := c.conn.WriteMessage(websocket.TextMessage, message)
+			userMessage := model.UserMessage{
+				Username: message.client.username,
+				Message:  string(message.messagem),
+			}
+			sendMessage, err := json.Marshal(userMessage)
+			if err != nil {
+				log.Fatal("Error marshalling user message to JSON")
+			}
+			err = c.conn.WriteMessage(websocket.TextMessage, sendMessage)
 			if err != nil {
 				log.Printf("Error writing to client %v", err)
 				return
 			}
-			log.Println("WritePump sent:", string(message))
+			log.Println("WritePump sent:", string(message.messagem))
 
-		case <-ticker.C:
-			// This is just an example to demonstrate sending a message periodically.
-			// In a real application, you would have logic to decide what messages to send.
-			testMsg := "Ping from server"
-
-			log.Println("WritePump ticker sent:", testMsg)
 		}
 	}
 }

@@ -12,7 +12,23 @@ document.getElementById("chatForm").onsubmit = () => {
     }
     console.log(messageInputField.value);
     socket.send(messageInputField.value);
-    messageInputField.value = ''; // Clear the input field after sending the message
+     // Clear the input field after sending the message
+
+
+    const messageElement = document.createElement("div");
+    messageElement.className = "flex items-start mb-4 text-sm";
+    messageElement.innerHTML = `
+        <div class="flex-1 p-2 rounded bg-blue-100 text-right">${messageInputField.value}</div>
+    `;
+
+    // Append the message element to the chatMessage element
+    const chatMessageElement = document.getElementById("chatMessage");
+    if (chatMessageElement) {
+        chatMessageElement.appendChild(messageElement);
+    }
+
+    chatMessageElement.scrollTop = chatMessageElement.scrollHeight;
+    messageInputField.value = '';
     return false; // Prevents form from submitting in the traditional way
 };
 
@@ -33,7 +49,7 @@ userImage.src = "https://github.com/"+username+".png"; // Replace with the new i
 // Change the alt attribute
 userImage.alt = username; 
         userIdDiv.innerText = username;
-        load_socket()
+        load_socket(username)
     }
 });
 
@@ -44,19 +60,22 @@ userImage.alt = username;
 
 
 
-function load_socket(){
+function load_socket(username){
     if(window["WebSocket"]){
-        socket = new WebSocket("ws://" + document.location.host + "/ws");
+        socket = new WebSocket("ws://" + document.location.host + "/ws?username="+username);
 
         socket.onmessage = function(event) {
-            const message = event.data; // The message received from the server
+            console.log(event)
+            const data = JSON.parse(event.data); // The message received from the server
         
             // Create the message HTML element
             const messageElement = document.createElement("div");
             messageElement.className = "flex items-start mb-4 text-sm";
             messageElement.innerHTML = `
-                <div class="flex-shrink-0 font-bold mr-2 rounded bg-green-100 flex items-center justify-center w-8 h-8">B:</div>
-                <div class="flex-1 p-2 rounded bg-green-100">${message}</div>
+            <div class="flex-shrink-0 mr-2 rounded bg-green-100 flex items-center justify-center w-8 h-8" title="${data.username}">
+            <img src="https://github.com/${data.username}.png" alt="User Image" class="w-full h-full rounded">
+        </div>
+                <div class="flex-1 p-2 rounded bg-green-100">${data.message}</div>
             `;
         
             // Append the message element to the chatMessage element

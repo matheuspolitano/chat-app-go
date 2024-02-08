@@ -2,7 +2,7 @@ package commHub
 
 type Hub struct {
 	clients  map[*Client]bool
-	message  chan []byte
+	message  chan MessageClient
 	incoming chan *Client
 	leaving  chan *Client
 }
@@ -10,7 +10,7 @@ type Hub struct {
 func NewHub() *Hub {
 	return &Hub{
 		clients:  make(map[*Client]bool),
-		message:  make(chan []byte),
+		message:  make(chan MessageClient),
 		incoming: make(chan *Client),
 		leaving:  make(chan *Client),
 	}
@@ -23,8 +23,10 @@ func (hub *Hub) Run() {
 			hub.clients[in] = true
 		case m := <-hub.message:
 			for client := range hub.clients {
-				select {
-				case client.send <- m:
+				if m.client != client {
+					select {
+					case client.send <- m:
+					}
 				}
 			}
 

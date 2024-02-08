@@ -18,12 +18,14 @@ var upgrade = websocket.Upgrader{
 }
 
 func ServeWs(w http.ResponseWriter, r *http.Request, hub *commHub.Hub) {
+	queryValues := r.URL.Query()
+	username := queryValues.Get("username")
 	conn, err := upgrade.Upgrade(w, r, nil)
 	if err != nil {
 		log.Fatalln(err)
 		return
 	}
-	client := commHub.NewClient(hub, conn)
+	client := commHub.NewClient(hub, conn, username)
 	go client.WritePump()
 	go client.ReadPump()
 
