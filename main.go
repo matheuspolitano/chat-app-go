@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -24,7 +25,7 @@ func main() {
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		handlers.ServeWs(w, r, hub)
 	})
-
+	log.Printf("Server starting on port %s\n", port)
 	server := &http.Server{
 		Addr:              ":" + port,
 		ReadHeaderTimeout: 3 * time.Second,
