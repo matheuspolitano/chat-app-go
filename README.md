@@ -26,7 +26,7 @@ To get the chat application running locally, follow these steps:
 
    ```bash
    git clone https://github.com/matheuspolitano/chat-app-go.git
-   cd your-repo-name
+   cd chat-app-go
    ```
 
 2. **Run the application**
