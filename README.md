@@ -2,6 +2,8 @@
 
 This Go chat application provides real-time communication between users through websockets. It's built using the Go programming language and leverages the `gorilla/websocket` package for managing websocket connections. The application is designed to be simple, efficient, and easy to deploy and run.
 
+![image](https://github.com/matheuspolitano/chat-app-go/assets/47066134/cc4be0e6-39ca-4926-820e-a0b500321ead)
+
 ## Features
 
 - Real-time chat communication.
