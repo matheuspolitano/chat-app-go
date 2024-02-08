@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/matheuspolitano/chat-app-go/pkg/commHub"
@@ -9,6 +10,11 @@ import (
 )
 
 func main() {
+	args := os.Args
+	port := "8080"
+	if len(args) >= 2 {
+		port = args[1]
+	}
 	staticDir := http.Dir("./public")
 	fileServer := http.FileServer(staticDir)
 	hub := commHub.NewHub()
@@ -20,7 +26,7 @@ func main() {
 	})
 
 	server := &http.Server{
-		Addr:              ":8089",
+		Addr:              ":" + port,
 		ReadHeaderTimeout: 3 * time.Second,
 	}
 

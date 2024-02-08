@@ -56,7 +56,7 @@ func (c *Client) ReadPump() {
 			log.Println("ReadPump error:", err)
 			break
 		}
-		log.Printf("ReadPump %s received:%s", c.username, string(message))
+		log.Printf("received from %s :%s", c.username, string(message))
 		c.hub.message <- MessageClient{c, message}
 	}
 }
